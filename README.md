@@ -1,3 +1,3 @@
 Projeto integrador
 
-link do site:https://vercel.com/gabrielsantos552s-projects/edburguer
+link do site: https://edburguer.vercel.app/

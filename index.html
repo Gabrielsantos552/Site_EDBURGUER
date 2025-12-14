@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ED BURGUER</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #222;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #111;
+            padding: 5px;
+            border-top: 4px solid #ffae00;
+            border-bottom: 4px solid #ffae00;
+            text-align: center;
+        }
+
+        .logo {
+            margin-top: 10px;
+            margin-bottom: 10px;
+            width: 120px;
+            height: auto;
+        }
+
+        h2 {
+            text-align: center;
+            margin-top: 15px;
+            margin-bottom: 10px;
+            color: #ffae00;
+            font-size: 1.5em;
+        }
+
+        .menu {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            justify-content: center;
+            padding: 10px;
+        }
+
+        .item {
+            background-color: #333;
+            border-radius: 10px;
+            width: 100%;
+            max-width: 250px;
+            margin: 0 auto;
+            text-align: center;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        .item h3 {
+            margin: 5px 0;
+            font-size: 1.1em;
+            min-height: 2.2em;
+        }
+
+        .foto-item {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 5px;
+        }
+
+        .foto-BEBIDAS {
+            width: 70%;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 5px;
+        }
+
+        .item p {
+            font-size: 0.9em;
+            color: #ccc;
+            margin: 5px 0;
+        }
+
+        .item button {
+            background-color: #ffae00;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 90%;
+            margin-top: 5px;
+        }
+
+        .btn-remover {
+            background-color: red;
+            padding: 5px 10px;
+            border-radius: 4px;
+            margin-left: 5px;
+            font-size: 0.7em;
+        }
+
+        .btn-whatsapp {
+            background-color: #25d366;
+            padding: 12px 15px;
+            border-radius: 8px;
+            width: 100%;
+        }
+
+        .categoria {
+            border-bottom: 2px solid #ffae00;
+            padding-bottom: 5px;
+            margin: 20px 10px 10px;
+        }
+
+        #carrinho-flutuante {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            width: 140px;
+            max-height: 60vh;
+            overflow-y: auto;
+            background-color: #000000e6;
+            padding: 10px;
+            border: 2px solid #ffae00;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+            z-index: 1000;
+            touch-action: manipulation;
+        }
+
+        #carrinho-flutuante h2 {
+            font-size: 1.1em;
+            margin-top: 0;
+            margin-bottom: 5px;
+            color: #ffae00;
+        }
+
+        #lista-carrinho {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            font-size: 0.8em;
+        }
+
+        #lista-carrinho li {
+            margin: 4px 0;
+            overflow-wrap: break-word;
+        }
+
+        @media (min-width: 600px) {
+            .logo {
+                width: 150px;
+            }
+
+            h2 {
+                font-size: 1.8em;
+            }
+
+            .menu {
+                grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+                gap: 20px;
+                padding: 10px 20px;
+            }
+
+            .item {
+                border-radius: 15px;
+                padding: 15px;
+            }
+
+            .item h3 {
+                font-size: 1.2em;
+            }
+
+            .foto-item {
+                height: 140px;
+            }
+
+            .foto-BEBIDAS {
+                width: 60%;
+                height: 120px;
+            }
+            
+            #carrinho-flutuante {
+                width: 180px;
+                padding: 15px;
+                bottom: 20px;
+                right: 20px;
+            }
+
+            #carrinho-flutuante h2 {
+                font-size: 1.3em;
+            }
+
+            #lista-carrinho {
+                font-size: 0.9em;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .logo {
+                width: 180px;
+            }
+            
+            h2 {
+                font-size: 2em;
+            }
+
+            .menu {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 30px;
+                padding: 10px 50px;
+            }
+
+            .item {
+                max-width: none;
+                width: auto;
+                border-radius: 20px;
+                padding: 20px;
+            }
+
+            .item h3 {
+                font-size: 1.3em;
+            }
+
+            .foto-item {
+                height: 180px;
+            }
+
+            .foto-BEBIDAS {
+                width: 50%;
+                height: 140px;
+            }
+
+            }
+
+            .foto-Porcoes {
+                width: 80%;
+                height: 150px;
+            }
+
+            #carrinho-flutuante {
+                width: 200px;
+                max-height: 70vh;
+                padding: 20px;
+                right: 30px;
+            }
+            
+            #carrinho-flutuante:not([style*="left"]) {
+                transition: transform 0.3s ease;
+            }
+
+            #carrinho-flutuante:not([style*="left"]):hover {
+                transform: scale(1.05);
+            }
+    </style>
+</head>
+<body>
+
+    <header>
+        <img src= "figuras/logo.png" alt="logo" class="logo">
+    </header>
+
+    <h2 class="categoria">🍔 Classic Burguers 🍔</h2>
+    <div class="menu">
+        <div class="item"><h3>X-BURGUER</h3>
+            <p>Pão brioche, queijo, hambúrguer</p>
+            <img src="figuras/hamburguer.jpg" alt="hamburguer" class="foto-Porcoes">
+            <p>R$10,00</p><button onclick="addCarrinho('X-BURGUER', 10)">Adicionar</button>
+        </div>
+
+        <div class="item"><h3>X-SALADA</h3>
+            <p>Pão brioche, queijo, alface, tomate, hambúrguer</p>
+            <img src="figuras/hamburguer.jpg" alt="hamburguer" class="foto-Porcoes">
+            <p>R$10,00</p><button onclick="addCarrinho('X-SALADA', 10)">Adicionar</button>
+        </div>
+
+        <div class="item"><h3>X-TUDO</h3>
+            <img src="figuras/x_tudo.png" alt="x_tudo" class="foto-item">
+            <p>Carne, queijo, bacon, ovo, salada</p>
+            <p>R$15,00</p><button onclick="addCarrinho('X-TUDO', 15)">Adicionar</button>
+        </div>
+        
+        <div class="item"><h3>X-EGG</h3>
+            <p>Pão brioche, hambúrguer, queijo, ovo</p>
+            <img src="figuras/hamburguer.jpg" alt="hamburguer" class="foto-Porcoes">
+            <p>R$12,00</p><button onclick="addCarrinho('X-EGG', 12)">Adicionar</button>
+        </div>
+
+        <div class="item"><h3>TROPA DE ELITE</h3>
+            <p>Pão brioche, carne, ovo, calabresa</p>
+            <img src="figuras/hamburguer.jpg" alt="hamburguer" class="foto-Porcoes">
+            <p>R$30,00</p><button onclick="addCarrinho('TROPA DE ELITE', 30)">Adicionar</button>
+        </div>
+
+        <div class="item"><h3>MATA FOME</h3>
+            <img src="figuras/mata_fome.png" alt="mata_fome" class="foto-item">
+            <p>Pão brioche, carne, bacon, queijo</p>
+            <p>R$20,00</p><button onclick="addCarrinho('MATA FOME', 20)">Adicionar</button>
+        </div>
+
+        <div class="item"><h3>X-CALABRESA</h3>
+            <p>Pão brioche, hambúrguer, queijo, alface e calabresa</p>
+            <img src="figuras/hamburguer.jpg" alt="hamburguer" class="foto-Porcoes">
+            <p>R$13,00</p><button onclick="addCarrinho('X-CALABRESA', 13)">Adicionar</button>
+        </div>
+
+        <div class="item"><h3>DETROIT</h3>
+            <p>Pão brioche, blend de carnes, queijo, bacon, alface</p>
+            <img src="figuras/hamburguer.jpg" alt="hamburguer" class="foto-Porcoes">
+            <p>R$30,00</p><button onclick="addCarrinho('DETROIT', 30)">Adicionar</button>
+        </div>
+
+        <div class="item"><h3>TEXAS</h3>
+            <p>Pão brioche, blend de carnes, bacon, ovo, queijo</p>
+            <img src="figuras/hamburguer.jpg" alt="hamburguer" class="foto-Porcoes">
+            <p>R$30,00</p><button onclick="addCarrinho('TEXAS', 30)">Adicionar</button>
+        </div>
+
+        <div class="item"><h3>BRUTUS</h3>
+            <img src="figuras/brutus.png" alt="brutus" class="foto-item">
+            <p>Pão brioche, 2 blends de carne, queijo, bacon, alface</p>
+            <p>R$40,00</p><button onclick="addCarrinho('BRUTUS', 40)">Adicionar</button>
+        </div>
+
+        <div class="item"><h3>BIG CHEDDAR</h3>
+            <p>Pão brioche, 2 blends, cheddar duplo, alface</p>
+            <img src="figuras/hamburguer.jpg" alt="hamburguer" class="foto-Porcoes">
+            <p>R$37,00</p><button onclick="addCarrinho('BIG CHEDDAR', 37)">Adicionar</button>
+        </div>
+
+        <div class="item"><h3>MISTER BARBECUE</h3>
+            <p>Blend de carnes, queijo, barbecue</p>
+            <img src="figuras/hamburguer.jpg" alt="hamburguer" class="foto-Porcoes">
+            <p>R$30,00</p><button onclick="addCarrinho('MISTER BARBECUE', 30)">Adicionar</button>
+        </div>
+
+        <div class="item"><h3>NORDESTINO</h3>
+            <p>Blend, queijo, ovo, calabresa</p>
+            <img src="figuras/hamburguer.jpg" alt="hamburguer" class="foto-Porcoes">
+            <p>R$30,00</p><button onclick="addCarrinho('NORDESTINO', 30)">Adicionar</button>
+        </div>
+
+        <div class="item"><h3>MONSTER</h3>
+            <p>2 blends de carne, queijo, bacon, ovo</p>
+            <img src="figuras/hamburguer.jpg" alt="hamburguer" class="foto-Porcoes">
+            <p>R$40,00</p><button onclick="addCarrinho('MONSTER', 40)">Adicionar</button>
+        </div>
+
+        <div class="item"><h3>MEXICANO</h3>
+            <p>Blend, bacon, queijo, molho picante</p>
+            <img src="figuras/hamburguer.jpg" alt="hamburguer" class="foto-Porcoes">
+            <p>R$30,00</p><button onclick="addCarrinho('MEXICANO', 30)">Adicionar</button>
+        </div>
+
+        <div class="item"><h3>CALABRESA SUPREME</h3>
+            <p>Pão brioche, blend de carne, queijo, calabresa</p>
+           <img src="figuras/hamburguer.jpg" alt="hamburguer" class="foto-Porcoes">
+            <p>R$30,00</p><button onclick="addCarrinho('CALABRESA SUPREME', 30)">Adicionar</button>
+        </div>
+
+        <div class="item"><h3>MEGA BURGUER</h3>
+            <p>Pão brioche, blend de carne, queijo, fritas</p>
+            <img src="figuras/hamburguer.jpg" alt="hamburguer" class="foto-Porcoes">
+            <p>R$25,00</p><button onclick="addCarrinho('MEGA BURGUER', 25)">Adicionar</button>
+        </div>
+    </div>
+
+    <h2 class="categoria">🍔 Linha Artesanal 🍔</h2>
+    <div class="menu">
+        <div class="item"><h3>X-BURGUER <br>ARTESANAL</h3>
+            <p>Pão brioche, blend de carne,<br> queijo</p>
+            <img src="figuras/hamburguer.jpg" alt="hamburguer" class="foto-Porcoes">
+            <p>R$15,00</p><button onclick="addCarrinho('X-BURGUER ARTESANAL', 15)">Adicionar</button>
+        </div>
+
+        <div class="item"><h3>X-EGG <br>ARTESANAL</h3>
+            <p>Pão brioche, blend de carne,<br> queijo, ovo, tomate</p>
+            <img src="figuras/hamburguer.jpg" alt="hamburguer" class="foto-Porcoes">
+            <p>R$18,00</p><button onclick="addCarrinho('X-EGG ARTESANAL', 18)">Adicionar</button>
+        </div>
+
+        <div class="item"><h3>X-BACON <br>  ARTESANAL</h3>
+            <p>Pão brioche, blend de carne,<br>  queijo, bacon</p>
+            <img src="figuras/hamburguer.jpg" alt="hamburguer" class="foto-Porcoes">
+            <p>R$22,00</p><button onclick="addCarrinho('X-BACON ARTESANAL', 22)">Adicionar</button>
+        </div>
+
+        <div class="item"><h3>BIG CHEDDAR <br> ARTESANAL</h3>
+            <p>Pão brioche, 2 blends, cheddar <br>  duplo, alface</p>
+            <img src="figuras/hamburguer.jpg" alt="hamburguer" class="foto-Porcoes">
+            <p>R$27,00</p><button onclick="addCarrinho('BIG CHEDDAR ARTESANAL', 27)">Adicionar</button>
+        </div>
+    </div>
+
+    <h2 class="categoria">🍗 Linha de Frango 🍗</h2>
+    <div class="menu">
+        <div class="item"><h3>FRANGO FIT</h3>
+            <p>Pão brioche, filé de frango, queijo,<br>  alface e tomate</p>
+            <img src="figuras/hamburguer.jpg" alt="hamburguer" class="foto-Porcoes">
+            <p>R$12,00</p><button onclick="addCarrinho('FRANGO FIT', 12)">Adicionar</button>
+        </div>
+
+        <div class="item"><h3>EGG FRANGO</h3>
+            <p>Pão brioche, filé de frango, queijo,<br>  alface, tomate e ovo</p>
+            <img src="figuras/hamburguer.jpg" alt="hamburguer" class="foto-Porcoes">
+            <p>R$14,00</p><button onclick="addCarrinho('EGG FRANGO', 14)">Adicionar</button>
+        </div>
+
+        <div class="item"><h3>FRANGO BACONADO</h3>
+            <p>Pão brioche, filé de frango, queijo,<br>  bacon e alface</p>
+            <img src="figuras/hamburguer.jpg" alt="hamburguer" class="foto-Porcoes">
+            <p>R$17,00</p><button onclick="addCarrinho('FRANGO BACONADO', 17)">Adicionar</button>
+        </div>
+
+        <div class="item"><h3>TUDO FRANGO</h3>
+            <p>Pão brioche, filé de frango, queijo,<br>  bacon, alface e ovo</p>
+            <img src="figuras/hamburguer.jpg" alt="hamburguer" class="foto-Porcoes">
+            <p>R$20,00</p><button onclick="addCarrinho('TUDO FRANGO', 20)">Adicionar</button>
+        </div>
+    </div>
+
+    <h2 class="categoria">🍟 Porções 🍟</h2>
+    <div class="menu">
+        <div class="item"><h3>BATATA FRITA</h3>
+            <p>Porção de fritas crocantes</p>
+            <img src="figuras/batata_frita.jpg" alt="batata_frita" class="foto-Porcoes">
+            <p>R$20,00</p><button onclick="addCarrinho('BATATA FRITA', 20)">Adicionar</button>
+        </div>
+
+        <div class="item"><h3>BATATA RECHEADA</h3>
+            <p>Fritas com cheddar, bacon, <br> calabresa e alho</p>
+            <img src="figuras/batata_recheada.png" alt="batata_recheada" class="foto-Porcoes">
+            <p>R$30,00</p><button onclick="addCarrinho('BATATA RECHEADA', 30)">Adicionar</button>
+        </div>
+
+        <div class="item"><h3>FILÉ COM FRITAS</h3>
+            <p>Acompanha farofa</p>
+            <img src="figuras/file.jpg" alt="file" class="foto-Porcoes">
+            <p>R$45,00</p><button onclick="addCarrinho('FILÉ COM FRITAS', 45)">Adicionar</button>
+        </div>
+    </div>
+
+    <h2 class="categoria">🥤 Bebidas 🥤</h2>
+    <div class="menu">
+        <div class="item"><h3>ÁGUA MINERAL S/ GÁS</h3>
+            <img src="figuras/semgas.png" alt="semgas" class="foto-BEBIDAS">
+            <p>Sem gás</p>
+            <p>R$3,00</p><button onclick="addCarrinho('ÁGUA MINERAL', 3)">Adicionar</button>
+        </div>
+
+        <div class="item"><h3>ÁGUA MINERAL C/ GÁS</h3>
+            <img src="figuras/comgas.png" alt="comgas" class="foto-BEBIDAS">
+            <p>Com gás</p>
+            <p>R$5,00</p><button onclick="addCarrinho('ÁGUA MINERAL C/ GÁS', 5)">Adicionar</button>
+        </div>
+
+        <div class="item"><h3>REFRIGERANTE LATA</h3>
+            <img src="figuras/refri.png" alt="refri" class="foto-BEBIDAS">
+            <p>Consultar sabores</p>
+            <p>R$6,00</p><button onclick="addCarrinho('REFRIGERANTE LATA', 6)">Adicionar</button>
+        </div>
+
+        <div class="item"><h3>REFRIGERANTE 1L</h3>
+            <img src="figuras/coca1l.png" alt="coca1l" class="foto-BEBIDAS">
+            <p>Consultar sabores</p>
+            <p>R$10,00</p><button onclick="addCarrinho('REFRIGERANTE LITRO', 10)">Adicionar</button>
+        </div>
+
+        <div class="item"><h3>SUCO</h3>
+            <img src="figuras/suco.png" alt="suco" class="foto-BEBIDAS">
+            <p>Consultar sabores</p>
+            <p>R$6,00</p><button onclick="addCarrinho('SUCO', 6)">Adicionar</button>
+        </div>
+    </div>
+
+    <div class="carrinho" id="carrinho-flutuante">
+        <h2>🛒 Seu Pedido</h2>
+        <ul id="lista-carrinho"></ul>
+        <p>Total: R$ <span id="total">0.00</span></p>
+        <button class="btn-whatsapp" onclick="enviarWhatsApp()">Enviar Pedido no WhatsApp</button>
+    </div>
+
+    <script>
+        let carrinho = [];
+        let total = 0;
+
+        function addCarrinho(item, preco) {
+            const itemExistente = carrinho.find(c => c.item === item);
+
+            if (itemExistente) {
+                itemExistente.quantidade++;
+            } else {
+                carrinho.push({ item, preco, quantidade: 1 });
+            }
+
+            total = carrinho.reduce((acc, current) => acc + (current.preco * current.quantidade), 0);
+            atualizarCarrinho();
+        }
+
+        function removerCarrinho(index) {
+            if (carrinho[index].quantidade > 1) {
+                carrinho[index].quantidade--;
+            } else {
+                carrinho.splice(index, 1);
+            }
+            total = carrinho.reduce((acc, current) => acc + (current.preco * current.quantidade), 0);
+            atualizarCarrinho();
+        }
+
+        function atualizarCarrinho() {
+            const lista = document.getElementById("lista-carrinho");
+            const totalEl = document.getElementById("total");
+            lista.innerHTML = "";
+            carrinho.forEach((c, index) => {
+                const li = document.createElement("li");
+                
+                const quantidadeTexto = c.quantidade > 1 ? `(${c.quantidade}x)` : '';
+                
+                li.innerHTML = `${quantidadeTexto} ${c.item} - R$ ${(c.preco * c.quantidade).toFixed(2)}`;
+                
+                const btnRemover = document.createElement("button");
+                btnRemover.textContent = "Remover";
+                btnRemover.className = "btn-remover";
+                btnRemover.onclick = () => removerCarrinho(index);
+                li.appendChild(btnRemover);
+                lista.appendChild(li);
+            });
+            totalEl.textContent = total.toFixed(2);
+        }
+
+        function enviarWhatsApp() {
+            if (carrinho.length === 0) {
+                alert("Adicione algo ao pedido!");
+                return;
+            }
+            const numero = "558695556782";
+            
+            const mensagem = carrinho.map(c => {
+                const qtd = c.quantidade > 1 ? `(${c.quantidade}x) ` : '';
+                return `${qtd}${c.item} - R$ ${(c.preco * c.quantidade).toFixed(2)}`;
+            }).join("%0A");
+
+            const texto = `🍔 *Pedido ED BURGUER*%0A%0A*Itens*%0A${mensagem}%0A%0A*Total: R$ ${total.toFixed(2)}*%0A%0A*Aguardando Confirmação e Endereço de Entrega.*`;
+            window.open(`https://wa.me/${numero}?text=${texto}`, "_blank");
+        }
+
+        const carrinhoBox = document.getElementById("carrinho-flutuante");
+        let offsetX, offsetY, isDragging = false;
+
+        carrinhoBox.addEventListener("contextmenu", (e) => e.preventDefault());
+
+        carrinhoBox.addEventListener("touchstart", (e) => {
+            if (e.touches.length !== 1 || e.target.closest('#lista-carrinho') || e.target.tagName === 'BUTTON') return;
+
+            e.preventDefault();
+            const toque = e.touches[0];
+            isDragging = true;
+            
+            const rect = carrinhoBox.getBoundingClientRect();
+            offsetX = toque.clientX - rect.left;
+            offsetY = toque.clientY - rect.top;
+
+            carrinhoBox.style.bottom = "auto";
+            carrinhoBox.style.right = "auto";
+            carrinhoBox.style.top = rect.top + "px";
+            carrinhoBox.style.left = rect.left + "px";
+            carrinhoBox.style.position = "fixed";
+        }, { passive: false });
+
+        document.addEventListener("touchmove", (e) => {
+            if (!isDragging) return;
+            e.preventDefault();
+
+            const toque = e.touches[0];
+            
+            let novoX = toque.clientX - offsetX;
+            let novoY = toque.clientY - offsetY;
+            
+            novoX = Math.max(0, Math.min(novoX, window.innerWidth - carrinhoBox.offsetWidth));
+            novoY = Math.max(0, Math.min(novoY, window.innerHeight - carrinhoBox.offsetHeight));
+
+            carrinhoBox.style.left = novoX + "px";
+            carrinhoBox.style.top = novoY + "px";
+        }, { passive: false });
+
+        document.addEventListener("touchend", () => {
+            isDragging = false;
+        });
+
+        carrinhoBox.addEventListener("mousedown", (e) => {
+            if (e.target.tagName === 'BUTTON' || e.target.closest('#lista-carrinho')) return;
+
+            isDragging = true;
+            e.preventDefault();
+            
+            const rect = carrinhoBox.getBoundingClientRect();
+            offsetX = e.clientX - rect.left;
+            offsetY = e.clientY - rect.top;
+
+            carrinhoBox.style.bottom = "auto";
+            carrinhoBox.style.right = "auto";
+            carrinhoBox.style.top = rect.top + "px";
+            carrinhoBox.style.left = rect.left + "px";
+            carrinhoBox.style.position = "fixed";
+            carrinhoBox.style.cursor = "grabbing";
+        });
+
+        document.addEventListener("mousemove", (e) => {
+            if (!isDragging) return;
+            e.preventDefault();
+
+            let novoX = e.clientX - offsetX;
+            let novoY = e.clientY - offsetY;
+
+            novoX = Math.max(0, Math.min(novoX, window.innerWidth - carrinhoBox.offsetWidth));
+            novoY = Math.max(0, Math.min(novoY, window.innerHeight - carrinhoBox.offsetHeight));
+
+            carrinhoBox.style.left = novoX + "px";
+            carrinhoBox.style.top = novoY + "px";
+        });
+
+        document.addEventListener("mouseup", () => {
+            isDragging = false;
+            carrinhoBox.style.cursor = "pointer";
+        });
+    </script>
+
+</body>
+</html>

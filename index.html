@@ -544,7 +544,7 @@
                 return `${qtd}${c.item} - R$ ${(c.preco * c.quantidade).toFixed(2)}`;
             }).join("%0A");
 
-            const texto = `🍔 *Pedido ED BURGUER*%0A%0A*Itens*%0A${mensagem}%0A%0A*Total: R$ ${total.toFixed(2)}*%0A%0A*Aguardando Confirmação.*`;
+            const texto = ` Pedido ED BURGUER %0A%0A*Itens*%0A${mensagem}%0A%0A*Total: R$ ${total.toFixed(2)}*%0A%0A*Aguardando Confirmação.*`;
             window.open(`https://wa.me/${numero}?text=${texto}`, "_blank");
         }
 
